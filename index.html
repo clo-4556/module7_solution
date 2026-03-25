@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" ng-app="ShoppingListCheckOff">
+  <head>
+    <title>Shopping List Check Off</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <style>
+      body {
+        background-image: url('background.jpg'); 
+        background-size: cover; 
+        background-position: center; 
+      }
+      .col-md-6 {
+        background-color: rgba(255,255,255,0.55); 
+        border-radius: 6px; 
+        padding: 15px; 
+      }
+      .container {
+        text-align: center; 
+      }
+      h1 {
+        background-color: rgba(0,0,0,0.60); 
+        border-radius: 6px; 
+        padding: 10px; 
+        color: #c9a84c; 
+      }
+      p {
+        font-weight: bold;
+      }
+      h2 {
+        color: black;
+          
+      }
+      .emptyMessage {
+        font-weight: bold;
+        color: red;
+        font-size: 1.2em;
+      }
+      li {
+        margin-bottom: 7px;
+        font-size: 1.2em;
+      }
+      li > button {
+        margin-left: 6px;
+      }
+      button > span {
+        color: green;
+      }
+    </style>
+  </head>
+<body>
+  <div class="container">
+  <h1>Kale Merchant Shopping List Check Off</h1>
+   
+  <div class="row">
+
+    <!-- To Buy List -->
+    <div class="col-md-6" ng-controller="ToBuyController as toBuy">
+     <h2>To Buy:</h2>
+     <p>Welcome to Limgrave, Tarnished! Your journey to find the Elden Ring begins! If you plan 
+        to survive you will need items from Kale, the Merchant. Select the items you will need 
+        to complete your journey! (Please note: $$$1 = 1 Rune)
+     </p> 
+     <ul>
+       <li ng-repeat="item in toBuy.items">Buy <input type="number" ng-model="item.quantity" min="1" style="width:55px;"> {{ item.name }} 
+        <button class="btn btn-default" ng-click="toBuy.buyItem(item)"><span class="glyphicon glyphicon-ok"></span> Buy </button></li>
+       
+     </ul>
+     <div class="emptyMessage" ng-if="toBuy.items.length === 0">Nothing to purchase, Tarnished! You wiped out Kale's Inventory!</div>
+    </div>
+
+    <!-- Already Bought List -->
+    <div class="col-md-6" ng-controller="AlreadyBoughtController as alreadyBought">
+     <h2>Already Bought:</h2>
+     <ul>
+       <li ng-repeat="item in alreadyBought.items">Bought {{ item.quantity }} {{ item.name }} for a total rune price of {{ (item.quantity * item.pricePerItem) | runeConversion }}</li>
+     </ul>
+     <div class="emptyMessage" ng-if="alreadyBought.items.length === 0">Tarnished, you haven't bought anything yet. Kale needs to feed his family.</div>
+    </div>
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
